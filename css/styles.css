@@ -1,0 +1,45 @@
+/* variables */
+:root {
+  --main-font: "Lato", sans-serif;
+  --main-color: #8f7bff;
+  --background-color: #e9f0f6;
+  --white: #fff;
+  --black: #111;
+  --blue: #08376f;
+  --light-blue: #c6e1fb;
+  --green: #326d46;
+  --light-green: #cee9d4;
+  --yellow: #78580d;
+  --light-yellow: #fff1c9;
+  --red: #621c24;
+  --light-red: #f5d1d3;
+}
+
+/* global styles */
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: var(--main-font);
+  font-size: 1.6rem;
+  line-height: 1.8;
+  background-color: var(--background-color);
+}
+
+[class$="__container"] {
+  max-width: 80rem;
+  width: 90%; /* cuando el ancho sea menos de 800px va a ocupar el 90% */
+  margin: 0 auto; /* centra el contenedor */
+}
+
+[class$="__heading"] {
+  margin: 2rem 0;
+}
