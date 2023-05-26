@@ -12,5 +12,70 @@
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/styles.css" />
   </head>
-  <body></body>
+  <body>
+    <header class="header header__container">
+      <h1 class="header__heading">Administrador de Gastos</h1>
+    </header>
+    <main class="main main__container">
+      <section class="main__add-expenses">
+        <h2 class="main__heading">Añade tus gastos aquí</h2>
+        <form id="form" action="#">
+          <div class="form__expense">
+            <label class="form__label" for="expense">Gasto:</label>
+            <input type="text" class="form__input" id="expense" placeholder="Nombre Gasto" />
+          </div>
+          <div class="form__quantity">
+            <label class="form__label" for="quantity">Cantidad:</label>
+            <input type="text" class="form__input" id="quantity" placeholder="Cantidad en $" />
+          </div>
+
+          <button type="submit" class="button button--add">Agregar</button>
+        </form>
+      </section>
+
+      <section class="main__expense-list">
+        <table class="table">
+          <thead class="table__head">
+            <tr class="table__head-row">
+              <th class="table__head-cell">Gasto</th>
+              <th class="table__head-cell">Monto</th>
+              <th class="table__head-cell"></th>
+            </tr>
+          </thead>
+          <tbody class="table__body">
+            <tr class="table__body-row">
+              <td class="table__body-cell">Comida</td>
+              <td class="table__body-cell">$20</td>
+              <td class="table__body-cell">
+                <button class="button button--remove">Eliminar</button>
+              </td>
+            </tr>
+            <tr class="table__body-row">
+              <td class="table__body-cell">Renta</td>
+              <td class="table__body-cell">$800</td>
+              <td class="table__body-cell">
+                <button class="button button--remove">Eliminar</button>
+              </td>
+            </tr>
+            <tr class="table__body-row">
+              <td class="table__body-cell">Transporte</td>
+              <td class="table__body-cell">$50</td>
+              <td class="table__body-cell">
+                <button class="button button--remove">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="results">
+        <div class="results__budget">
+          <p class="results__text">Presupuesto: $50000</p>
+        </div>
+        <div class="results__remaining-budget">
+          <p class="results__text">Restante: $50000</p>
+        </div>
+      </div>
+    </main>
+  </body>
 </html>
