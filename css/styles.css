@@ -5,13 +5,14 @@
   --background-color: #e9f0f6;
   --white: #fff;
   --black: #111;
-  --blue: #08376f;
+  --dark-blue: #08376f;
   --light-blue: #c6e1fb;
-  --green: #326d46;
+  --dark-green: #326d46;
   --light-green: #cee9d4;
-  --yellow: #78580d;
+  --dark-yellow: #78580d;
   --light-yellow: #fff1c9;
-  --red: #621c24;
+  --dark-red: #621c24;
+  --red: #d40808;
   --light-red: #f5d1d3;
 }
 
@@ -42,4 +43,141 @@ body {
 
 [class$="__heading"] {
   margin: 2rem 0;
+}
+
+/*  header  */
+
+.header {
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--white);
+  margin-bottom: 8rem;
+}
+
+.header__heading {
+  font-size: 2rem;
+  margin-left: 2rem;
+}
+
+/*  main  */
+
+/*  add expenses section   */
+.main__add-expenses,
+.table {
+  background-color: var(--white);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  margin-bottom: 8rem;
+}
+
+@media (min-width: 468px) {
+  .main__add-expenses {
+    padding: 4rem;
+  }
+}
+
+.main__heading {
+  font-weight: 400;
+}
+
+.form__label {
+  display: block;
+}
+
+.form__input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: solid 1px var(--main-color);
+}
+
+.form__expense,
+.form__quantity {
+  margin-bottom: 3rem;
+}
+
+.button {
+  border: none;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.button--add {
+  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: var(--main-color);
+}
+
+/* expense list section */
+
+.table {
+  width: 100%;
+}
+
+.table td {
+  max-width: 20rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table__head {
+  background-color: var(--white);
+}
+
+.table__head-cell,
+.table__body-cell {
+  background-color: var(--white);
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.button--remove {
+  background-color: var(--red);
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* results section */
+.results {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  text-align: center;
+  flex-direction: column;
+  margin-bottom: 10rem;
+}
+
+@media (min-width: 468px) {
+  .results {
+    flex-direction: row;
+  }
+}
+
+.results__budget {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 100%;
+  background-color: var(--light-blue);
+  color: var(--dark-blue);
+}
+
+.results__budget--remaining {
+  background-color: var(--light-green);
+  color: var(--dark-green);
+}
+
+.results__text {
+  font-size: 1.8rem;
+  font-weight: 700;
 }
