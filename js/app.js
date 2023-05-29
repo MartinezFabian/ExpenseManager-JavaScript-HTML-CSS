@@ -36,6 +36,37 @@ class UserInterface {
     document.querySelector("#user-budget").textContent = `Presupuesto: $${userBudget}`;
     document.querySelector("#budget-remaining").textContent = `Restante: $${budgetRemaining}`;
   }
+
+  static showAlert(message, type) {
+    let existAlert = document.querySelector(".alert");
+
+    //si ya existe una alerta actualmente salir de la función
+    if (existAlert) {
+      return;
+    }
+
+    //crear alerta
+    const alertElement = document.createElement("DIV");
+    alertElement.classList.add("alert");
+
+    if (type === "error") {
+      alertElement.classList.add("alert--error");
+    } else {
+      alertElement.classList.add("alert--success");
+    }
+
+    //agregar mensaje
+    alertElement.textContent = message;
+
+    //agregar alerta al contenedor
+    const sectionAddExpenses = document.querySelector(".main__add-expenses");
+    sectionAddExpenses.appendChild(alertElement);
+
+    //luego de 2 segundos eliminar la alerta
+    setTimeout(() => {
+      alertElement.remove();
+    }, 2000);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -61,5 +92,30 @@ function main() {
     } while (userBudget === "" || userBudget === null || isNaN(userBudget) || userBudget <= 0);
 
     return Number(userBudget);
+  }
+
+  registerEventListeners();
+
+  function registerEventListeners() {
+    form.addEventListener("submit", addExpense);
+  }
+
+  function addExpense(e) {
+    e.preventDefault(); //prevenir el comportamiento predeterminado del evento submit
+
+    const expenseName = document.querySelector("#expense").value;
+    const quantity = document.querySelector("#quantity").value;
+
+    //validamos el nombre del gasto y la cantidad
+
+    if (expenseName === "" || quantity === "") {
+      UserInterface.showAlert("Ambos campos son obligatorios", "error");
+      return;
+    } else if (quantity <= 0 || isNaN(quantity)) {
+      UserInterface.showAlert("La monto ingresado no es un valor válido", "error");
+      return;
+    }
+
+    UserInterface.showAlert("Agregando gasto...");
   }
 }
