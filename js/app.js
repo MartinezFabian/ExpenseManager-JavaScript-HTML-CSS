@@ -24,7 +24,11 @@ class Budget {
   }
 
   addExpense(expense) {
-    this.#expenses.push(Number(expense));
+    this.#expenses.push(expense);
+  }
+
+  get expenses() {
+    return this.#expenses;
   }
 }
 
@@ -35,6 +39,39 @@ class UserInterface {
     //agregar presupuesto y presupuesto restante al HTML
     document.querySelector("#user-budget").textContent = `Presupuesto: $${userBudget}`;
     document.querySelector("#budget-remaining").textContent = `Restante: $${budgetRemaining}`;
+  }
+
+  static insertExpenses(expenses) {
+    const expenseList = document.querySelector(".table__body");
+
+    // limpiamos los gastos actuales en el HTML para evitar duplicados
+    UserInterface.clearHTML(expenseList);
+
+    //por cada gasto en el array gastos creamos un elemento HTML
+    expenses.forEach((expense) => {
+      const { id, name, amount } = expense;
+
+      expenseList.insertAdjacentHTML(
+        "afterbegin",
+        `
+        <tr data-id="${id}" class="table__body-row">
+          <td class="table__body-cell">${name}</td>
+          <td class="table__body-cell">$${amount}</td>
+          <td class="table__body-cell">
+            <button class="button button--remove">&times</button>
+          </td>
+        </tr>
+      `
+      );
+    });
+  }
+
+  static clearHTML(expenseList) {
+    // si el elemento expenseList tiene un primer hijo
+    while (expenseList.firstChild) {
+      //eliminar el primer hijo del elemento expenseList
+      expenseList.removeChild(expenseList.firstChild);
+    }
   }
 
   static showAlert(message, type) {
@@ -76,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
 function main() {
   // variables/constantes
   const form = document.querySelector("#form");
-  const expenseList = document.querySelector(".table__body");
 
   //objetos
   const budget = new Budget(getBudget());
@@ -104,18 +140,36 @@ function main() {
     e.preventDefault(); //prevenir el comportamiento predeterminado del evento submit
 
     const expenseName = document.querySelector("#expense").value;
-    const quantity = document.querySelector("#quantity").value;
+    const amount = document.querySelector("#amount").value;
 
-    //validamos el nombre del gasto y la cantidad
+    //validamos el nombre del gasto y el monto
 
-    if (expenseName === "" || quantity === "") {
+    if (expenseName === "" || amount === "") {
       UserInterface.showAlert("Ambos campos son obligatorios", "error");
       return;
-    } else if (quantity <= 0 || isNaN(quantity)) {
+    } else if (amount <= 0 || isNaN(amount)) {
       UserInterface.showAlert("La monto ingresado no es un valor válido", "error");
       return;
     }
 
+    //si el nombre del gasto y el monto son valores validos
+
     UserInterface.showAlert("Agregando gasto...");
+    form.reset();
+
+    // generar un objeto gasto
+
+    const expense = {
+      id: Date.now(),
+      name: expenseName,
+      amount: Number(amount),
+    };
+
+    //agregamos el objeto gasto al array expenses del objeto budget
+
+    budget.addExpense(expense);
+
+    // agregar los gastos al HTML
+    UserInterface.insertExpenses(budget.expenses);
   }
 }

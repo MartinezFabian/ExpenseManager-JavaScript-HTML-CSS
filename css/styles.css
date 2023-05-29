@@ -141,8 +141,8 @@ body {
 .button--remove {
   background-color: var(--red);
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
