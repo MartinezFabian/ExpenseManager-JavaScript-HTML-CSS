@@ -10,10 +10,10 @@
   --dark-green: #326d46;
   --light-green: #cee9d4;
   --dark-yellow: #78580d;
-  --light-yellow: #fff1c9;
+  --light-yellow: #ffda71;
   --dark-red: #621c24;
   --red: #d40808;
-  --light-red: #f5d1d3;
+  --light-red: #ffb7b7;
 }
 
 /* global styles */
@@ -172,9 +172,19 @@ body {
   color: var(--dark-blue);
 }
 
-.results__budget--remaining {
+.results__budget--remaining-25 {
   background-color: var(--light-green);
   color: var(--dark-green);
+}
+
+.results__budget--remaining-50 {
+  background-color: var(--light-yellow);
+  color: var(--dark-yellow);
+}
+
+.results__budget--remaining-75 {
+  background-color: var(--light-red);
+  color: var(--dark-red);
 }
 
 .results__text {

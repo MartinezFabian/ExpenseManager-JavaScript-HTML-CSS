@@ -52,6 +52,44 @@ class UserInterface {
     document.querySelector("#budget-remaining").textContent = `Restante: $${budgetRemaining}`;
   }
 
+  static checkRemainingBudget(budget) {
+    const divBudgetRemaining = document.querySelector("#budget-remaining-container");
+
+    const { userBudget, budgetRemaining } = budget;
+
+    // comprobar si el presupuesto restante es el 25% o menos del presupuesto inicial
+    if (userBudget / 4 >= budgetRemaining) {
+      //eliminamos la clase que agrega colores verdes o amarillos
+      divBudgetRemaining.classList.remove(
+        "results__budget--remaining-25",
+        "results__budget--remaining-50"
+      );
+
+      //agregamos la clase que agrega colores rojos
+      divBudgetRemaining.classList.add("results__budget--remaining-75");
+
+      // comprobar si el presupuesto restante es el 50% o menos del presupuesto inicial
+    } else if (userBudget / 2 >= budgetRemaining) {
+      //eliminamos la clase que agrega colores verdes o rojos
+      divBudgetRemaining.classList.remove(
+        "results__budget--remaining-25",
+        "results__budget--remaining-75"
+      );
+
+      //agregamos la clase que agrega colores amarillos
+      divBudgetRemaining.classList.add("results__budget--remaining-50");
+    } else {
+      //eliminamos la clase que agrega colores rojos o amarillos
+      divBudgetRemaining.classList.remove(
+        "results__budget--remaining-75",
+        "results__budget--remaining-50"
+      );
+
+      //agregamos la clase que agrega colores verdes
+      divBudgetRemaining.classList.add("results__budget--remaining-25");
+    }
+  }
+
   static insertExpenses(expenses) {
     const expenseList = document.querySelector(".table__body");
 
@@ -191,5 +229,8 @@ function main() {
 
     //actualizar presupuesto restante
     UserInterface.insertBudget(budget);
+
+    // comprobar el presupuesto restante para cambiar colores
+    UserInterface.checkRemainingBudget(budget);
   }
 }
