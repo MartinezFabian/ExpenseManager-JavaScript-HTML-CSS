@@ -32,6 +32,11 @@ class Budget {
     this.calculateRemaining();
   }
 
+  deleteExpense(id) {
+    this.#expenses = this.#expenses.filter((expense) => expense.id !== id);
+    this.calculateRemaining();
+  }
+
   get expenses() {
     return this.#expenses;
   }
@@ -162,6 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function main() {
   // variables/constantes
   const form = document.querySelector("#form");
+  const expenseList = document.querySelector(".table__body");
 
   //objetos
   const budget = new Budget(getBudget());
@@ -183,6 +189,15 @@ function main() {
 
   function registerEventListeners() {
     form.addEventListener("submit", addExpense);
+
+    expenseList.addEventListener("click", (e) => {
+      //si se hizo click en alguno de los buttons eliminar
+      if (e.target.classList.contains("button--remove")) {
+        const expenseElement = e.target.parentElement.parentElement;
+        //llamamos a removeExpense con el id del elemento a eliminar
+        removeExpense(expenseElement.dataset.id);
+      }
+    });
   }
 
   function addExpense(e) {
@@ -225,6 +240,20 @@ function main() {
     budget.addExpense(expense);
 
     // agregar los gastos al HTML
+    UserInterface.insertExpenses(budget.expenses);
+
+    //actualizar presupuesto restante
+    UserInterface.insertBudget(budget);
+
+    // comprobar el presupuesto restante para cambiar colores
+    UserInterface.checkRemainingBudget(budget);
+  }
+
+  function removeExpense(id) {
+    // eliminamos el gasto con el id del array expenses del objeto budget
+    budget.deleteExpense(Number(id));
+
+    // actualizar los gastos en el HTML
     UserInterface.insertExpenses(budget.expenses);
 
     //actualizar presupuesto restante
