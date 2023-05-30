@@ -23,12 +23,23 @@ class Budget {
     return this.#budgetRemaining;
   }
 
+  set budgetRemaining(budgetRemaining) {
+    this.#budgetRemaining = budgetRemaining;
+  }
+
   addExpense(expense) {
     this.#expenses.push(expense);
+    this.calculateRemaining();
   }
 
   get expenses() {
     return this.#expenses;
+  }
+
+  calculateRemaining() {
+    let budgetSpent = this.#expenses.reduce((total, expense) => total + expense.amount, 0);
+
+    this.budgetRemaining = (this.userBudget - budgetSpent).toFixed(1);
   }
 }
 
@@ -150,6 +161,12 @@ function main() {
     } else if (amount <= 0 || isNaN(amount)) {
       UserInterface.showAlert("La monto ingresado no es un valor válido", "error");
       return;
+    } else if (budget.budgetRemaining - amount < 0) {
+      UserInterface.showAlert(
+        "No tienes suficiente presupuesto disponible para este gasto",
+        "error"
+      );
+      return;
     }
 
     //si el nombre del gasto y el monto son valores validos
@@ -171,5 +188,8 @@ function main() {
 
     // agregar los gastos al HTML
     UserInterface.insertExpenses(budget.expenses);
+
+    //actualizar presupuesto restante
+    UserInterface.insertBudget(budget);
   }
 }
