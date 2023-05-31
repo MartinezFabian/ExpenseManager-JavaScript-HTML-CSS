@@ -25,4 +25,4 @@ The main purpose of this project is to apply object-oriented programming in a re
 
 ## Online Demo
 
-You can access the online demo of this project through the following link: [Expense Manager](...)
+You can access the online demo of this project through the following link: [Expense Manager](https://martinezfabian.github.io/ExpenseManager-JavaScript-HTML-CSS/)
