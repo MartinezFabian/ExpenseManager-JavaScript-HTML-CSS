@@ -41,6 +41,10 @@ class Budget {
     return this.#expenses;
   }
 
+  set expenses(expenses) {
+    this.#expenses = expenses;
+  }
+
   calculateRemaining() {
     let budgetSpent = this.#expenses.reduce((total, expense) => total + expense.amount, 0);
 
@@ -168,13 +172,45 @@ function main() {
   // variables/constantes
   const form = document.querySelector("#form");
   const expenseList = document.querySelector(".table__body");
+  const btnResetBudget = document.querySelector("#reset-budget");
 
   //objetos
-  const budget = new Budget(getBudget());
-  UserInterface.insertBudget(budget);
+  let budget;
 
   //funciones
 
+  getDataLocalStorage();
+
+  function getDataLocalStorage() {
+    // Verificar si hay datos almacenados en el local storage con la clave budget
+    if (localStorage.getItem("expenses")) {
+      // Obtener los datos almacenados y convertirlos de nuevo a un objeto
+      let expenses = JSON.parse(localStorage.getItem("expenses"));
+      let userBudget = JSON.parse(localStorage.getItem("userBudget"));
+      let budgetRemaining = JSON.parse(localStorage.getItem("budgetRemaining"));
+
+      budget = new Budget(userBudget);
+      budget.expenses = expenses;
+      budget.budgetRemaining = budgetRemaining;
+
+      // agregar los gastos al HTML
+      UserInterface.insertExpenses(budget.expenses);
+
+      //actualizar presupuesto restante
+      UserInterface.insertBudget(budget);
+
+      // comprobar el presupuesto restante para cambiar colores
+      UserInterface.checkRemainingBudget(budget);
+    } else {
+      //solicitar presupuesto al usuario y crear una instancia de budget
+      budget = new Budget(getBudget());
+
+      //agregar presupuesto y presupuesto restante al HTML
+      UserInterface.insertBudget(budget);
+    }
+  }
+
+  //solicitar presupuesto al usuario
   function getBudget() {
     let userBudget;
 
@@ -197,6 +233,13 @@ function main() {
         //llamamos a removeExpense con el id del elemento a eliminar
         removeExpense(expenseElement.dataset.id);
       }
+    });
+
+    btnResetBudget.addEventListener("click", () => {
+      //limpia todos los datos del local storage
+      localStorage.clear();
+      //recarga la página
+      location.reload();
     });
   }
 
@@ -247,6 +290,9 @@ function main() {
 
     // comprobar el presupuesto restante para cambiar colores
     UserInterface.checkRemainingBudget(budget);
+
+    //actualizar en local storage
+    syncLocalStorage();
   }
 
   function removeExpense(id) {
@@ -261,5 +307,15 @@ function main() {
 
     // comprobar el presupuesto restante para cambiar colores
     UserInterface.checkRemainingBudget(budget);
+
+    //actualizar en local storage
+    syncLocalStorage();
+  }
+
+  //Guarda el objeto budget en local storage
+  function syncLocalStorage() {
+    localStorage.setItem("expenses", JSON.stringify(budget.expenses));
+    localStorage.setItem("userBudget", JSON.stringify(budget.userBudget));
+    localStorage.setItem("budgetRemaining", JSON.stringify(budget.budgetRemaining));
   }
 }

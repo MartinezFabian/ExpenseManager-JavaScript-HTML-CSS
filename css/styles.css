@@ -49,9 +49,20 @@ body {
 
 .header {
   margin: 0;
-  padding: 1rem;
+  padding: 1rem 3rem;
   background-color: var(--white);
   margin-bottom: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 468px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .header__heading {
@@ -111,6 +122,13 @@ body {
   border-radius: 0.5rem;
   padding: 1rem 2rem;
   background-color: var(--main-color);
+  width: 100%;
+}
+
+@media (min-width: 468px) {
+  .button--add {
+    width: 20rem;
+  }
 }
 
 /* expense list section */
